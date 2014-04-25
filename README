@@ -1,0 +1,38 @@
+-----------------------------------------------------------------------------------------------------------------------
+Documentation
+-------------
+
+
+"Logger" is logging library in C. It is lockless SMP-safe and it uses ring buffer as container for log messages.
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Sub-modules:
+------------
+    log.c      - implements logger's constructor/destructor, printing function, appenders;
+               - enables using logger as Singleton due to function get_instance();
+
+    ring_buf.c - creates ring buffer
+               - creates supplementary thread that is reading from ring buffer in cycle and writes messages to FILE
+               - includes functions to read from/to write to ring buffer
+
+    log.h      - declarations of functions and data structures from log.c
+
+    ring_buf.h - declarations of functions and data structures from ring_buf.c
+
+    typedefs.h - include typedefs of logger's and ring buffer's structures
+               - it is necessairy for correct separate compilation
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+    test_logger.c - creates several threads to use logger
+                  - demonstrates usage of mentioned interface
+
+
+To see how logging library works you need to compile and run "test_logger.c": 
+--------------------------------------------------------------------------------
+gcc test_logger.c ring_buf.c log.c -o test_logger -lpthread
+./test_logger
+
+-----------------------------------------------------------------------------------------------------------------------
